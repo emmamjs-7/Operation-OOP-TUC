@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OperationOOP.Core.Models
 {
-    public class Plant
+    public class Tree
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,5 +16,14 @@ namespace OperationOOP.Core.Models
         public DateTime LastWatered { get; set; }
         public DateTime LastPruned { get; set; }
         public CareLevel CareLevel { get; set; }
+        
     }
+}
+
+public enum CareLevel
+{
+    Beginner,
+    Intermediate,
+    Advanced,
+    Master
 }

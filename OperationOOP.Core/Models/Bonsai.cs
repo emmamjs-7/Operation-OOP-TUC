@@ -1,8 +1,20 @@
 namespace OperationOOP.Core.Models;
-public class Bonsai :Plant
+public class Bonsai :Tree
 {
     public BonsaiStyle Style { get; set; }
-   
+
+    public Bonsai(string name, string species, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, string bonsaiStyle)
+    {
+        Name = name;
+        Species = species;
+        AgeYears = ageYears;
+        LastWatered = lastWatered;
+        LastPruned = lastPruned;
+        CareLevel = careLevel;
+        Style = Enum.Parse<BonsaiStyle>(bonsaiStyle);
+
+    }
+
 }
 
 public enum BonsaiStyle
@@ -14,10 +26,3 @@ public enum BonsaiStyle
     HanKengai   // Semi-cascade
 }
 
-public enum CareLevel
-{
-    Beginner,
-    Intermediate,
-    Advanced,
-    Master
-} 
