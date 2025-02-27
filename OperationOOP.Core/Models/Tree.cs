@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OperationOOP.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -16,14 +17,14 @@ namespace OperationOOP.Core.Models
         public DateTime LastWatered { get; set; }
         public DateTime LastPruned { get; set; }
         public CareLevel CareLevel { get; set; }
-        
+
     }
 }
 
 public enum CareLevel
 {
-    Beginner,
-    Intermediate,
-    Advanced,
-    Master
+    Beginner = 14,    // Vattnas var 14:e dag
+    Intermediate = 10, // Vattnas var 10:e dag
+    Advanced = 7,      // Vattnas var 7:e dag
+    Master = 5         // Vattnas var 5:e dag
 }
