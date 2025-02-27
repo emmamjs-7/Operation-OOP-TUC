@@ -1,7 +1,14 @@
 namespace OperationOOP.Core.Models;
+
+
 public class Bonsai :Tree
 {
     public BonsaiStyle Style { get; set; }
+
+    public Bonsai()
+    {
+    }
+
 
     public Bonsai(string name, string species, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, string bonsaiStyle)
     {

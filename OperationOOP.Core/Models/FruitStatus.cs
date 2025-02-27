@@ -1,8 +1,13 @@
 namespace OperationOOP.Core.Models
 {
-    public abstract class FruitTree : Tree, IFruitBearing
+    public class FruitStatus
     {
         public bool IsRipe { get; set; }
+
+        public FruitStatus(bool isRipe)
+        {
+            IsRipe = isRipe;
+        }
 
         public bool HarvestFruit()
         {
