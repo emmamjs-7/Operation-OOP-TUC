@@ -10,30 +10,30 @@ public class GetBonsai : IEndpoint
     public record Response(
         int Id,
         string Name,
-        string Species,
         int AgeYears,
         DateTime LastWatered,
         DateTime LastPruned,
-        BonsaiStyle Style,
         CareLevel CareLevel
     );
 
-    private static Response Handle([AsParameters] Request request, IDatabase db)
+    private static IResult Handle([AsParameters] Request request, IDatabase db)
     {
         var bonsai = db.Bonsais.Find(bonsai => bonsai.Id == request.Id);
 
-        // map bonsai to response dto
+        if (bonsai == null)
+        {
+            return Results.NotFound(new { message = $"Bonsai with ID {request.Id} not found." });
+        }
+
         var response = new Response(
             Id: bonsai.Id,
             Name: bonsai.Name,
-            Species: bonsai.Species,
             AgeYears: bonsai.AgeYears,
             LastWatered: bonsai.LastWatered,
             LastPruned: bonsai.LastPruned,
-            Style: bonsai.Style,
             CareLevel: bonsai.CareLevel
             );
 
-        return response;
+        return Results.Ok(response);
     }
 }
