@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace OperationOOP.Core.Models
 {
     public class OliveTree : FruitTree
     {
         public OliveType Type { get; private set; }
-       
 
-        public OliveTree(string name, string species, int ageYears, DateTime lastWatered,
-            DateTime lastPruned, CareLevel careLevel, bool isRipe, string oliveType)
-            : base(lastWatered, lastPruned, careLevel)
+
+        public OliveTree(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, bool isRipe, OliveType oliveType)
+           : base(id, name, ageYears, lastWatered, lastPruned, careLevel)
         {
+            Id = id;
             Name = name;
-            Species = species;
             AgeYears = ageYears;
-            CareLevel = careLevel;
+            Type = oliveType;
             IsRipe = isRipe;
-            Type = Enum.Parse<OliveType>(oliveType);
+            _maintenance = new TreeMaintenance(lastWatered, lastPruned, careLevel);
+
         }
 
 

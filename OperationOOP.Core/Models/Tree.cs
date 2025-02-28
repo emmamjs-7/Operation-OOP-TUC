@@ -8,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace OperationOOP.Core.Models
 {
-    public class Tree
+    public abstract class Tree
     {
+
+        public Tree(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel)
+        {
+            Id = id;
+            Name = name;
+            AgeYears = ageYears;
+            LastWatered = lastWatered;
+            LastPruned = lastPruned;
+            CareLevel = careLevel;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Species { get; set; }
@@ -18,13 +29,22 @@ namespace OperationOOP.Core.Models
         public DateTime LastPruned { get; set; }
         public CareLevel CareLevel { get; set; }
 
+        public TreeMaintenance _maintenance;
+
+        public static List<Tree> FilterByCareLevels(List<CareLevel> careLevels, List<Tree> trees)
+        {
+            if (careLevels == null || !careLevels.Any()) return trees;
+
+            return trees.Where(tree => careLevels.Contains(tree._maintenance.CareLevel)).ToList();
+        }
+
     }
 }
-
+//siffran är antal dagar som trädet behöver vattnas
 public enum CareLevel
 {
-    Beginner = 14,    // Vattnas var 14:e dag
-    Intermediate = 10, // Vattnas var 10:e dag
-    Advanced = 7,      // Vattnas var 7:e dag
-    Master = 5         // Vattnas var 5:e dag
+    Low,
+    Medium,
+    High
+
 }

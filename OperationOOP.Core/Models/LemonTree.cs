@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OperationOOP.Core.Models
 {
     public class LemonTree : FruitTree
     {
+        public DateTime LastWatered { get; set; }
+        public DateTime LastPruned { get; set; }
+        public LemonType Type { get; set; }
 
-        public LemonType Type { get; private set; }
 
-        public LemonTree(string name, string species, int ageYears, DateTime lastWatered,
-            DateTime lastPruned, CareLevel careLevel, bool isRipe, string lemonType)
-            : base(lastWatered, lastPruned, careLevel)
+
+        public LemonTree(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, bool isRipe, LemonType lemonType)
+       : base(id, name, ageYears, lastWatered, lastPruned, careLevel)
         {
+            Id = id;
             Name = name;
-            Species = species;
             AgeYears = ageYears;
-            CareLevel = careLevel;
-            IsRipe = isRipe;    
-            Type = Enum.Parse<LemonType>(lemonType);
+            Type = lemonType;
+            IsRipe = isRipe;
+            _maintenance = new TreeMaintenance(lastWatered, lastPruned, careLevel);
+
         }
-       
 
         public void DisplayLemonTree()
         {
@@ -30,8 +28,6 @@ namespace OperationOOP.Core.Models
             Console.WriteLine($"Lemon type: {Type} is currently fruiting: {IsRipe}");
             Console.WriteLine($"Care level: {CareLevel}");
         }
-
-     
 
         public enum LemonType
         {

@@ -1,3 +1,5 @@
+using static OperationOOP.Core.Models.LemonTree;
+
 namespace OperationOOP.Core.Models;
 
 
@@ -5,23 +7,21 @@ public class Bonsai :Tree
 {
     public BonsaiStyle Style { get; set; }
 
-    public Bonsai()
-    {
-    }
+    
 
 
-    public Bonsai(string name, string species, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, string bonsaiStyle)
+    public Bonsai(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, BonsaiStyle style)
+       : base(id, name, ageYears, lastWatered, lastPruned, careLevel)
     {
+        Id = id;
         Name = name;
-        Species = species;
+  
         AgeYears = ageYears;
-        LastWatered = lastWatered;
-        LastPruned = lastPruned;
-        CareLevel = careLevel;
-        Style = Enum.Parse<BonsaiStyle>(bonsaiStyle);
+       
+        Style = style;
+        _maintenance = new TreeMaintenance(lastWatered, lastPruned, careLevel);
 
     }
-
 }
 
 public enum BonsaiStyle
