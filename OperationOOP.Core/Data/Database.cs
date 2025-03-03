@@ -20,7 +20,7 @@ namespace OperationOOP.Core.Data
 
         public Database()
         {
-            // Lägg till några exempel-citronträd
+            
             var lemonTree1 = new LemonTree(
                 id: 1,
                 name: "Meyer Lemon",
@@ -36,7 +36,7 @@ namespace OperationOOP.Core.Data
                 id: 2,
                 name: "Eureka Lemon",
                 ageYears: 5,
-                lastWatered: DateTime.Now.AddDays(-5),
+                lastWatered: DateTime.Now.AddDays(-14),
                 lastPruned: DateTime.Now.AddDays(-60),
                 careLevel: CareLevel.Medium,
                 isRipe: false,
@@ -47,8 +47,8 @@ namespace OperationOOP.Core.Data
                 id: 2,
                 name: "Manzanilla Olive",
                 ageYears: 5,
-                lastWatered: DateTime.Now.AddDays(-5),
-                lastPruned: DateTime.Now.AddDays(-60),
+                lastWatered: DateTime.Now.AddDays(-60),
+                lastPruned: DateTime.Now.AddDays(-181),
                 careLevel: CareLevel.Medium,
                 isRipe: false,
                 oliveType: OliveTree.OliveType.Manzanilla

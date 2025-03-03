@@ -10,41 +10,33 @@ namespace OperationOOP.Core.Models
 {
     public abstract class Tree
     {
+        private readonly TreeMaintenance _maintenance;
 
-        public Tree(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel)
+        protected Tree(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel)
         {
             Id = id;
             Name = name;
             AgeYears = ageYears;
-            LastWatered = lastWatered;
-            LastPruned = lastPruned;
-            CareLevel = careLevel;
+            _maintenance = new TreeMaintenance(lastWatered, lastPruned, careLevel);
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Species { get; set; }
-        public int AgeYears { get; set; }
-        public DateTime LastWatered { get; set; }
-        public DateTime LastPruned { get; set; }
-        public CareLevel CareLevel { get; set; }
+        public int Id { get; }
+        public string Name { get; }
+        public int AgeYears { get; }
+        public DateTime LastWatered => _maintenance.LastWatered;
+        public DateTime LastPruned => _maintenance.LastPruned;
+        public CareLevel CareLevel => _maintenance.CareLevel;
 
-        public TreeMaintenance _maintenance;
-
-        public static List<Tree> FilterByCareLevels(List<CareLevel> careLevels, List<Tree> trees)
-        {
-            if (careLevels == null || !careLevels.Any()) return trees;
-
-            return trees.Where(tree => careLevels.Contains(tree._maintenance.CareLevel)).ToList();
-        }
-
+        public bool NeedsWater() => _maintenance.NeedsWater();
+        public bool NeedsPruning() => _maintenance.NeedsPruning();
+        public void Water() => _maintenance.Water();
+        public void Prune() => _maintenance.Prune();
     }
 }
-//siffran är antal dagar som trädet behöver vattnas
+
 public enum CareLevel
 {
     Low,
     Medium,
     High
-
 }

@@ -7,19 +7,9 @@ public class Bonsai :Tree
 {
     public BonsaiStyle Style { get; set; }
 
-    
-
-
     public Bonsai(int id, string name, int ageYears, DateTime lastWatered, DateTime lastPruned, CareLevel careLevel, BonsaiStyle style)
        : base(id, name, ageYears, lastWatered, lastPruned, careLevel)
-    {
-        Id = id;
-        Name = name;
-  
-        AgeYears = ageYears;
-       
-        Style = style;
-        _maintenance = new TreeMaintenance(lastWatered, lastPruned, careLevel);
+    {  
 
     }
 }

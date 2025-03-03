@@ -23,15 +23,14 @@ public class CreateBonsai : IEndpoint
 
     private static Ok<Response> Handle(Request request, IDatabase db)
     {
-        // Skapa Bonsai med rätt parametrar
         var bonsai = new Bonsai(
-            db.Bonsais.Any() ? db.Bonsais.Max(b => b.Id) + 1 : 1, // Id
-            request.Name,  // Name
-            request.AgeYears, // AgeYears
-            request.LastWatered, // LastWatered
-            request.LastPruned, // LastPruned
-            request.CareLevel, // CareLevel
-            request.Style // BonsaiStyle
+            db.Bonsais.Any() ? db.Bonsais.Max(b => b.Id) + 1 : 1, 
+            request.Name,  
+            request.AgeYears, 
+            request.LastWatered,
+            request.LastPruned, 
+            request.CareLevel, 
+            request.Style 
         );
 
         db.Bonsais.Add(bonsai);
