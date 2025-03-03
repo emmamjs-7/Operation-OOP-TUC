@@ -1,4 +1,3 @@
-
 using Microsoft.Extensions.Options;
 using OperationOOP.Api.Endpoints;
 using OperationOOP.Core.Data;
@@ -27,11 +26,11 @@ namespace OperationOOP.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+           if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+           }
 
             app.UseHttpsRedirection();
 
@@ -39,7 +38,10 @@ namespace OperationOOP.Api
 
             app.MapEndpoints<Program>();
 
+         
+
             app.Run();
         }
     }
+ 
 }
