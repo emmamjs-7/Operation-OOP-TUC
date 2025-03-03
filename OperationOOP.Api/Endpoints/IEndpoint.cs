@@ -2,5 +2,5 @@
 
 public interface IEndpoint
 {
-    public static abstract void MapEndpoint(IEndpointRouteBuilder app);
+    static abstract void MapEndpoint(IEndpointRouteBuilder app);
 }

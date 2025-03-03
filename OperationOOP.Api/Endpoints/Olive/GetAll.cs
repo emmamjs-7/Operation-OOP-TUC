@@ -4,12 +4,12 @@ using OperationOOP.Core.Data;
 
 public class GetAllOliveTrees : IEndpoint
 {
-    // Mapping
+ 
     public static void MapEndpoint(IEndpointRouteBuilder app) => app
         .MapGet("/olivetrees", Handle)
         .WithSummary("Olive trees");
 
-    // Request and Response types
+   
     public record Response(
         int Id,
         string Name,
@@ -19,7 +19,7 @@ public class GetAllOliveTrees : IEndpoint
         DateTime LastPruned
     );
 
-    //Logic
+ 
     private static List<Response> Handle(IDatabase db)
     {
         return db.OliveTrees
