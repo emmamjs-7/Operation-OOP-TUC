@@ -1,53 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.Mvc;
 using OperationOOP.Core.Data;
 using OperationOOP.Core.Models;
 using OperationOOP.Api.Models;
+using OperationOOP.Core.Interfaces;
+
 namespace OperationOOP.Api.Endpoints.TreeMaintenance
 {
-    public class FilterTreeNeedsPrune : IEndpoint
+    public class FilterTreesNeedsPrune : IEndpoint
     {
         public static void MapEndpoint(IEndpointRouteBuilder app) => app
-            .MapGet("/trees/filter/needsPruning", Handle)
-            .WithName("Trees that Needs Prune")
+            .MapGet("/trees/filter/needsPrune", Handle)
+            .WithName("Filter Trees By Needing Pruning")
             .WithOpenApi();
 
-        private static IResult Handle(IDatabase db, [FromQuery] bool? needsPrune)
+
+        private static IResult Handle(IDatabase db, [FromQuery] bool? needsPruning)
         {
-            // Hämta alla träd
+            
             var trees = db.Trees;
 
-            // Filtrera om needsPrune är specificerat
-            if (needsPrune.HasValue)
+        
+            var pruningTrees = trees.OfType<INeedPrune>().ToList();
+
+        
+            if (needsPruning.HasValue)
             {
-                trees = trees.Where(tree => tree.NeedsPruning() == needsPrune.Value).ToList();
+                pruningTrees = pruningTrees.Where(tree => tree.NeedsPruning() == needsPruning.Value).ToList();
             }
 
-            if (!trees.Any())
+            if (!pruningTrees.Any())
             {
-                return Results.NotFound(new { message = "No trees found that needs pruning." });
+                return Results.NotFound(new { message = "No trees found that need to prune." });
             }
 
             // Mappa till response
-            var response = trees.Select(tree => new TreeResponse(
-                tree.Id,
-                tree.Name,
+            var response = pruningTrees.Select(tree => new TreeResponse(
+                (tree as Tree)!.Id,
+                (tree as Tree)!.Name,
                 tree.GetType().Name,
-                tree.CareLevel,
-                tree.LastWatered,
-                tree.LastPruned,
+                (tree as Tree)!.Care,
+                (tree as Tree)!.LastWatered,
+                (tree as Tree)!.LastPruned,
                 tree.NeedsWater(),
-                tree.NeedsPruning()
+                (tree as INeedPrune)?.NeedsPruning() ?? false
             ));
 
             return Results.Ok(response);
         }
+
     }
 }
-
-
-
 
 
