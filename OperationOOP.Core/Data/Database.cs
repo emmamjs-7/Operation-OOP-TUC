@@ -1,5 +1,7 @@
 ﻿using OperationOOP.Core.Models;
 using static OperationOOP.Core.Models.OliveTree;
+using static OperationOOP.Core.Models.Tree;
+using static OperationOOP.Core.Models.LemonTree;
 
 namespace OperationOOP.Core.Data
 {
@@ -27,6 +29,7 @@ namespace OperationOOP.Core.Data
                 ageYears: 3,
                 lastWatered: DateTime.Now.AddDays(-2),
                 lastPruned: DateTime.Now.AddDays(-30),
+                lastHarvest: DateTime.Now.AddDays(-130),
                 careLevel: CareLevel.High,
                 isRipe: true,
                 lemonType: LemonTree.LemonType.Meyer
@@ -38,28 +41,31 @@ namespace OperationOOP.Core.Data
                 ageYears: 5,
                 lastWatered: DateTime.Now.AddDays(-14),
                 lastPruned: DateTime.Now.AddDays(-60),
+                 lastHarvest: DateTime.Now.AddDays(-367),
                 careLevel: CareLevel.Medium,
                 isRipe: false,
                 lemonType: LemonTree.LemonType.Eureka
             );
 
             var oliveTree2 = new OliveTree(
-                id: 2,
+                id: 3,
                 name: "Manzanilla Olive",
                 ageYears: 5,
                 lastWatered: DateTime.Now.AddDays(-60),
                 lastPruned: DateTime.Now.AddDays(-181),
+                lastHarvest: DateTime.Now.AddDays(-367),
                 careLevel: CareLevel.Medium,
                 isRipe: false,
                 oliveType: OliveTree.OliveType.Manzanilla
                 );
 
             var oliveTree1 = new OliveTree(
-              id: 2,
+              id: 4,
               name: "Golden Olive",
               ageYears: 10,
               lastWatered: DateTime.Now.AddDays(-5),
               lastPruned: DateTime.Now.AddDays(-60),
+              lastHarvest: DateTime.Now.AddDays(-37),
               careLevel: CareLevel.Low,
               isRipe: true,
               oliveType: OliveTree.OliveType.Manzanilla

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OperationOOP.Core.Data;
 using OperationOOP.Core.Models;
 using OperationOOP.Api.Models;
+using OperationOOP.Core.Interfaces;
 
 namespace OperationOOP.Api.Endpoints.TreeMaintenance
 {
@@ -14,7 +15,7 @@ namespace OperationOOP.Api.Endpoints.TreeMaintenance
             .WithName("Filter trees By Carelevel")
             .WithOpenApi();
 
-        private static IResult Handle(IDatabase db, [FromQuery] CareLevel? careLevel)
+        private static IResult Handle(IDatabase db, [FromQuery] Tree.CareLevel? careLevel)
         {
             // Hämta alla träd
             var trees = db.Trees;
@@ -22,7 +23,7 @@ namespace OperationOOP.Api.Endpoints.TreeMaintenance
             // Filtrera om careLevel är specificerat
             if (careLevel.HasValue)
             {
-                trees = trees.Where(tree => tree.CareLevel == careLevel.Value).ToList();
+                trees = trees.Where(tree => tree.Care == careLevel.Value).ToList();
             }
 
             if (!trees.Any())
@@ -35,11 +36,11 @@ namespace OperationOOP.Api.Endpoints.TreeMaintenance
                 tree.Id,
                 tree.Name,
                 tree.GetType().Name,
-                tree.CareLevel,
+                tree.Care,
                 tree.LastWatered,
                 tree.LastPruned,
-                tree.NeedsWater(),
-                tree.NeedsPruning()
+               (tree as INeedWater)?.NeedsWater() ?? false,  
+                (tree as INeedPrune)?.NeedsPruning() ?? false
             ));
 
             return Results.Ok(response);

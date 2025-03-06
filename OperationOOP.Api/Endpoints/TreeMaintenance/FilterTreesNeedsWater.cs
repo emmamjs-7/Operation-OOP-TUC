@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OperationOOP.Core.Data;
 using OperationOOP.Core.Models;
 using OperationOOP.Api.Models;
+using OperationOOP.Core.Interfaces;
 
 namespace OperationOOP.Api.Endpoints.TreeMaintenance
 {
@@ -14,36 +15,41 @@ namespace OperationOOP.Api.Endpoints.TreeMaintenance
             .WithName("Filter Trees By Needing water")
             .WithOpenApi();
 
+
         private static IResult Handle(IDatabase db, [FromQuery] bool? needsWater)
         {
             // Hämta alla träd
             var trees = db.Trees;
 
-            // Filtrera om needsWater är specificerat
+            // Filtrera endast träd som implementerar INeedWater
+            var waterableTrees = trees.OfType<INeedWater>().ToList();
+
+            // Filtrera baserat på needsWater om det har ett värde
             if (needsWater.HasValue)
             {
-                trees = trees.Where(tree => tree.NeedsWater() == needsWater.Value).ToList();
+                waterableTrees = waterableTrees.Where(tree => tree.NeedsWater() == needsWater.Value).ToList();
             }
 
-            if (!trees.Any())
+            if (!waterableTrees.Any())
             {
-                return Results.NotFound(new { message = "No trees found that needs water." });
+                return Results.NotFound(new { message = "No trees found that need water." });
             }
 
             // Mappa till response
-            var response = trees.Select(tree => new TreeResponse(
-                tree.Id,
-                tree.Name,
+            var response = waterableTrees.Select(tree => new TreeResponse(
+                (tree as Tree)!.Id,  
+                (tree as Tree)!.Name,
                 tree.GetType().Name,
-                tree.CareLevel,
-                tree.LastWatered,
-                tree.LastPruned,
+                (tree as Tree)!.Care,
+                (tree as Tree)!.LastWatered,
+                (tree as Tree)!.LastPruned,
                 tree.NeedsWater(),
-                tree.NeedsPruning()
+                (tree as INeedPrune)?.NeedsPruning() ?? false 
             ));
 
             return Results.Ok(response);
         }
+
     }
 }
 
